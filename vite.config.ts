@@ -9,4 +9,14 @@ export default defineConfig({
     tailwindcss()
   ],
 
+  server: {
+    proxy: {
+      '/api':{
+        target:"https://one023a-backend-novo-b160.onrender.com",
+        changeOrigin: true,
+        rewrite:(path)=>path.replace(/^\/api/, '')
+      }
+    }
+  }
+
 })
