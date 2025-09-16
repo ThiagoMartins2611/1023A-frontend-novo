@@ -4,9 +4,9 @@ function App() {
   return(
 
     <>
-      <header></header>
+      <header className="h-20 bg-amber-700"></header>
       <ListarEstudante />
-      <footer></footer>
+      <footer className="h-20 bg-amber-700"></footer>
     </>
   );
 }
