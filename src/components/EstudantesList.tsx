@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Estudante from './Estudante';
 
 type EstudanteType = {
   _id: string,
@@ -20,7 +21,7 @@ function ListarEstudante(){
 
         try {
 
-            const res = await fetch("/api/estudantes");
+            const res = await fetch("/api/usuarios");
             const data = await res.json();
 
             setEstudante(data);
@@ -79,12 +80,9 @@ function ListarEstudante(){
             <div className="estudantes">
                 {
                     Estudantes.map((estudante)=>{
-                        return(<>
-                        <div className='estudante' key={estudante._id}>
-                            <h2>{estudante.nome}</h2>
-                            <p>Idade: {estudante.idade}</p>
-                        </div>
-                        </>)
+                        return<>
+                            <Estudante _id={Number(estudante._id)} nome={estudante.nome} idade={estudante.idade}/>
+                        </>
                     })
                 }
 
