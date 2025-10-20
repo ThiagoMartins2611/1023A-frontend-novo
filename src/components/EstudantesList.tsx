@@ -17,11 +17,18 @@ function ListarEstudante(){
 
     useEffect(()=>{
 
+
+
         async function buscarEstudantes() {
 
         try {
 
-            const res = await fetch("/api/usuarios");
+            const res = await fetch("/api/usuarios", {
+                headers:{
+                    'Authorization': `Bearer ${}`
+                }
+            });
+
             const data = await res.json();
 
             setEstudante(data);
