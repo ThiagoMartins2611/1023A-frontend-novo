@@ -1,4 +1,4 @@
-import ListarProdutos from "./components/EstudantesList";
+import ListarProdutos from "./components/ListarProdutos";
 
 function App() {
   
@@ -6,7 +6,9 @@ function App() {
 
     <>
       <header className="h-20 bg-amber-700"></header>
+       <main className="w-full">
       <ListarProdutos />
+      </main>
       <footer className="h-20 bg-amber-700"></footer>
     </>
   );

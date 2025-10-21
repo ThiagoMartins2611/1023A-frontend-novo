@@ -15,10 +15,6 @@ type ProdutoType = {
 function ListarProdutos(){
     
     const token = localStorage.getItem("token")
-    useEffect(()=>{
-
-    })
-    const [produtos, setProdutos] = useState<ProdutoType[]>([])
 
     useEffect(()=>{
         async function buscarProdutos() {
@@ -32,14 +28,16 @@ function ListarProdutos(){
 
             console.log(data)
             
-        } catch (error) {
-            console.log(error)
+        } catch (error:any) {
+            console.log("error get data: "+ (error?.res?.mensagem?? error?.message))
         }
         }
 
         buscarProdutos()
 
     }, []);
+
+    const [produtos, setProdutos] = useState<ProdutoType[]>([])
 
     async function handleSubmit(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault()
@@ -69,7 +67,7 @@ function ListarProdutos(){
 
     return (
         <>
-        <main className="w-full">
+       
 
         <div> 
             <h1>Cadastro de produto</h1>
@@ -98,9 +96,7 @@ function ListarProdutos(){
                 }
 
             </div>
-        </main>
         
-
         </>
     )
 }
