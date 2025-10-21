@@ -1,37 +1,34 @@
 import { useEffect, useState } from 'react';
-import Estudante from './Estudante';
+import Produto from './Produto';
+import api from '../api/api';
 
-type EstudanteType = {
+type ProdutoType = {
   _id: string,
   nome: string,
-  idade:number
+  preco: number,
+  descricao: string,
+  urlfoto: string
+
 }
 
 
-function ListarEstudante(){
+function ListarProdutos(){
     
-    const [Estudantes, setEstudante] = useState<EstudanteType[]>([])
-    const [nome, setNome] = useState("");
-    const [idade, setIdade] = useState(0);
-    
-
+    const token = localStorage.getItem("token")
     useEffect(()=>{
 
+    })
+    const [produtos, setProdutos] = useState<ProdutoType[]>([])
 
-
-        async function buscarEstudantes() {
+    useEffect(()=>{
+        async function buscarProdutos() {
 
         try {
 
-            const res = await fetch("/api/usuarios", {
-                headers:{
-                    'Authorization': `Bearer ${}`
-                }
-            });
+            const res = await api.get("/produtos")
+            const data = res.data;
 
-            const data = await res.json();
-
-            setEstudante(data);
+            setProdutos(data);
 
             console.log(data)
             
@@ -40,23 +37,26 @@ function ListarEstudante(){
         }
         }
 
-        buscarEstudantes()
+        buscarProdutos()
 
     }, []);
 
-    async function handleSubmit(e:React.FormEvent){
+    async function handleSubmit(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault()
-        const estudante = {nome, idade}
+        
+        const formData = new FormData(e?.currentTarget);
+        const nome = formData.get("nome")
+        const preco = formData.get("preco")
+        const descricao = formData.get("descricao")
+        const urlfoto = formData.get("urlfoto")
+
+        const produto = {nome, preco, descricao, urlfoto}
+
 
         try {
 
-            const res = await fetch("/api/estudantes",{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                }, 
-                body: JSON.stringify(estudante)
-            })
+            const res = await api.post('/produtos', produto)
+            setProdutos([...produtos, res.data])
             
         } catch (error) {
             console.log(error)
@@ -72,10 +72,14 @@ function ListarEstudante(){
         <main className="w-full">
 
         <div> 
-            <h1>Cdastro de estudante</h1>
+            <h1>Cadastro de produto</h1>
             <form onSubmit={handleSubmit}>
-            <input type="text" placeholder='nome' value={nome} onChange={(e)=> setNome(e.target.value)}/>
-            <input type="text" placeholder='idade' value={idade} onChange={(e)=> setIdade(Number(e.target.value))}/>
+
+            <input type="text" placeholder='nome' name='nome'/>
+            <input type='number' placeholder='preco' name='preco' />
+            <input type="text" placeholder='descrição' name='descricao'/>
+            <input type="text" placeholder='URL foto' name='urlfoto'/>
+            
             <button type='submit'>Cadastrar</button>
             
             </form>
@@ -84,11 +88,11 @@ function ListarEstudante(){
 
             <h1>Lista de estudantes</h1>
 
-            <div className="estudantes">
+            <div className="produtos">
                 {
-                    Estudantes.map((estudante)=>{
+                    produtos.map((produto)=>{
                         return<>
-                            <Estudante _id={Number(estudante._id)} nome={estudante.nome} idade={estudante.idade}/>
+                            <Produto _id={Number(produto._id)} nome={produto.nome} preco={produto.preco} descricao={produto.descricao} urlfoto={produto.urlfoto}/>
                         </>
                     })
                 }
@@ -101,4 +105,4 @@ function ListarEstudante(){
     )
 }
 
-export default ListarEstudante
+export default ListarProdutos

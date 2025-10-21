@@ -1,6 +1,10 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../../api/api";
 
 function Login(){
+    const [searchParams] = useSearchParams();
+    const mensagem = searchParams.get("mensagem");
+    const navigate = useNavigate();
 
     async function handleForm(event:React.FormEvent<HTMLFormElement>){
         event.preventDefault()
@@ -15,9 +19,11 @@ function Login(){
                 localStorage.setItem("token", res?.data?.token)
            }
 
-        } catch (error) {
-            
+        } catch (error:any) {
+            const mensagem = error?.response?.data?.error ?? error?.mensagem ?? "Erro desconhecido";
+            navigate(`/login?mensagem=${encodeURIComponent(mensagem)}`)
         }
+        
         
 
     }
@@ -34,3 +40,5 @@ function Login(){
         </>
     )
 }
+
+export default Login
