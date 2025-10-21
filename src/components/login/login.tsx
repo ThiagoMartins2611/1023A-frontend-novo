@@ -21,7 +21,7 @@ function Login(){
            }
 
         } catch (error:any) {
-            const mensagem = error?.response?.data?.error ?? error?.mensagem ?? "Erro desconhecido";
+            const mensagem = error?.response?.data?.mensagem ?? error?.message ?? "Erro desconhecido";
             navigate(`/login?mensagem=${encodeURIComponent(mensagem)}`)
         }
         

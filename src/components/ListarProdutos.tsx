@@ -26,7 +26,7 @@ function ListarProdutos(){
                 console.log(data)
                 
             } catch (error:any) {
-                console.log("error get data: "+ (error?.res?.mensagem?? error?.message))
+                console.log("error get data: "+ (error?.response?.data?.mensagem?? error?.message))
             }
         }
 
@@ -71,7 +71,7 @@ function ListarProdutos(){
             <form onSubmit={handleSubmit}>
 
             <input type="text" placeholder='nome' name='nome'/>
-            <input type='number' placeholder='preco' name='preco' />
+            <input type='text' placeholder='preco' name='preco' />
             <input type="text" placeholder='descrição' name='descricao'/>
             <input type="text" placeholder='URL foto' name='urlfoto'/>
             
@@ -86,10 +86,9 @@ function ListarProdutos(){
             <div className="produtos">
                 {
                     produtos.map((produto)=>{
-                        return<>
-                            <Produto _id={produto._id} nome={produto.nome} preco={produto.preco} descricao={produto.descricao} urlfoto={produto.urlfoto}/>
-
-                        </>
+                        return(
+                            <Produto  key={produto._id} _id={produto._id} nome={produto.nome} preco={produto.preco} descricao={produto.descricao} urlfoto={produto.urlfoto}/>
+                        )
                     })
                 }
 
