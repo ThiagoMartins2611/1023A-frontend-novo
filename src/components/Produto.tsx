@@ -1,6 +1,7 @@
+import api from "../api/api";
 
 type ProdutosProps = { 
-    _id: number,
+    _id: string,
     nome: string,
     preco: number,
     descricao:string, 
@@ -9,6 +10,17 @@ type ProdutosProps = {
 
 function Estudante({_id, nome, preco, descricao, urlfoto}: ProdutosProps){
 
+    async function adicionarCarrinho(produtoId:String){
+        try {
+
+            const res = await api.post('/produtos', {produtoId, quantidade: 1})
+            
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return <>
 
         <div className='w-30 h-40 bg-blue-600' key={_id}>
@@ -16,6 +28,7 @@ function Estudante({_id, nome, preco, descricao, urlfoto}: ProdutosProps){
             <h2>{nome}</h2>
             <p>preço: {preco}</p>
             <p>Descrição: {descricao}</p>
+            <button onClick={()=>adicionarCarrinho(_id)}></button>
         </div>
     
     </>

@@ -17,6 +17,7 @@ function Login(){
            const res = await api.post("/login", {email, senha});
            if(res.status === 200){
                 localStorage.setItem("token", res?.data?.token)
+                navigate("/")
            }
 
         } catch (error:any) {
@@ -35,6 +36,8 @@ function Login(){
             <form onSubmit={handleForm}>
                 <input type="text" name="email" placeholder="Email"/>
                 <input type="passward" name="senha" placeholder="Senha"/>
+
+                <button type="submit" >Logar</button>
 
             </form>
         </>

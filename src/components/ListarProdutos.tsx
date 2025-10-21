@@ -14,23 +14,20 @@ type ProdutoType = {
 
 function ListarProdutos(){
     
-    const token = localStorage.getItem("token")
-
     useEffect(()=>{
         async function buscarProdutos() {
 
-        try {
+            try {
 
-            const res = await api.get("/produtos")
-            const data = res.data;
+                const res = await api.get("/produtos")
+                const data = res.data;
 
-            setProdutos(data);
-
-            console.log(data)
-            
-        } catch (error:any) {
-            console.log("error get data: "+ (error?.res?.mensagem?? error?.message))
-        }
+                setProdutos(data);
+                console.log(data)
+                
+            } catch (error:any) {
+                console.log("error get data: "+ (error?.res?.mensagem?? error?.message))
+            }
         }
 
         buscarProdutos()
@@ -66,8 +63,8 @@ function ListarProdutos(){
     }
 
     return (
-        <>
-       
+
+       <>
 
         <div> 
             <h1>Cadastro de produto</h1>
@@ -90,7 +87,8 @@ function ListarProdutos(){
                 {
                     produtos.map((produto)=>{
                         return<>
-                            <Produto _id={Number(produto._id)} nome={produto.nome} preco={produto.preco} descricao={produto.descricao} urlfoto={produto.urlfoto}/>
+                            <Produto _id={produto._id} nome={produto.nome} preco={produto.preco} descricao={produto.descricao} urlfoto={produto.urlfoto}/>
+
                         </>
                     })
                 }
